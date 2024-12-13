@@ -1,7 +1,10 @@
-const tf = require('@tensorflow/tfjs-node');
-
-async function loadModel() {
-    return tf.loadGraphModel(process.env.MODEL_URL);
+const { Firestore } = require('@google-cloud/firestore');
+ 
+async function storeData(id, data) {
+  const db = new Firestore();
+ 
+  const predictCollection = db.collection('predictions');
+  return predictCollection.doc(id).set(data);
 }
-
-module.exports = loadModel;
+ 
+module.exports = storeData;
